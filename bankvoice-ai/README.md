@@ -1,127 +1,83 @@
-# BankVoice AI – Customer Voice Authentication & Banking Analytics
+# 🏛️ BankVoice AI – Customer Voice Authentication & Banking Analytics
 
-An institutional-grade, privacy-first banking intelligence dashboard that processes incoming customer voice recordings, converts speech to text using **OpenAI Whisper**, classifies sentiment using **Hugging Face Transformers**, categorizes complaint vectors, and surfaces real-time risk telemetry through interactive **Plotly** visualizations.
-
----
-
-## 1. Executive Summary & Objective
-
-Modern banking contact centers process millions of spoken interactions daily. **BankVoice AI** transforms unstructured voice audio into actionable compliance and operational intelligence:
-
-* **Voice Ingestion:** Ingest customer voice recordings in `.wav`, `.mp3`, or `.m4a` format.
-* **Local Speech-to-Text:** Transcribe voice audio locally using OpenAI Whisper (no audio data leaves the local server boundary).
-* **Customer Sentiment Analysis:** Classify caller sentiment as **Positive** or **Negative** with calibrated confidence scores using Hugging Face DistilBERT.
-* **Complaint Vector Categorization:** Multi-keyword rule engine mapping calls to 6 institutional banking categories with priority urgency scoring.
-* **Executive Analytics Telemetry:** Interactive Plotly charts (sentiment distribution donut, complaint category breakdown, domain cross-tabulation) and KPI metrics.
-* **Audit Persistence:** Automatic write-back to persistent local storage (`data/interactions.csv`).
-* **Voice Biometrics Demonstration:** Acoustic feature extraction and cosine similarity verification sandbox (clearly labeled as a prototype).
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=flat&logo=github)](https://github.com/2PieRadian/Voice-Authentication)
+**Repository URL:** [https://github.com/2PieRadian/Voice-Authentication](https://github.com/2PieRadian/Voice-Authentication)
 
 ---
 
-## 2. Technology Stack
+## 📌 Executive Project Synopsis
 
-* **Frontend & Interface:** Streamlit (Custom institutional dark navy unslop theme)
-* **Speech-to-Text Engine:** OpenAI Whisper (`base` / `tiny` CPU-optimized)
-* **Sentiment Analysis:** Hugging Face Transformers (`distilbert-base-uncased-finetuned-sst-2-english`)
-* **Data Processing & Analytics:** Pandas & NumPy
-* **Interactive Visualizations:** Plotly Express & Plotly Graph Objects
-* **Audio Processing:** Native Python `wave` PCM decoder (zero external C-library dependency for WAV files)
+**BankVoice AI** is an institutional, privacy-first analytics terminal that transforms unstructured customer audio calls into structured, categorized, and auditable banking intelligence in real time. 
 
----
+Operating **100% locally on CPU** with zero audio data transmitted to third-party clouds, the platform automates contact center compliance triage, flags critical fraud incidents, and surfaces executive risk telemetry.
 
-## 3. Project Directory Structure
-
-```text
-bankvoice-ai/
-│
-├── app.py                      # Main Streamlit application and UI layout
-├── requirements.txt            # Locked project dependencies
-├── README.md                   # Operational guide & setup manual
-│
-├── data/
-│   └── interactions.csv        # Persistent CSV database with sample & live records
-│
-├── samples/                    # Realistic pre-recorded banking customer audio WAV files
-│   ├── sample_fraud_alert.wav          # Marcus Vance: Unauthorized transaction dispute
-│   ├── sample_loan_inquiry.wav         # Sarah Jenkins: Mortgage rate inquiry
-│   └── sample_card_appreciation.wav    # Arthur Pendelton: Card unblock service compliment
-│
-└── utils/
-    ├── __init__.py
-    ├── transcription.py        # Whisper STT pipeline with native WAV PCM fallback
-    ├── sentiment.py            # Hugging Face DistilBERT with resilient heuristic fallback
-    ├── classification.py       # 6-domain banking complaint keyword classifier
-    ├── analytics.py            # KPI metrics calculation and Plotly chart renderers
-    └── voice_auth.py           # Acoustic voiceprint cosine similarity demo module
-```
+### Key Capabilities at a Glance:
+1. **Audio Ingestion & Signal Conditioning:** Ingests `.wav`, `.mp3`, and `.m4a` audio files. Includes a custom native PCM decoder allowing uncompressed WAV files to run out-of-the-box on Windows without requiring FFmpeg.
+2. **Local Neural Speech-to-Text (STT):** Transcribes audio using **OpenAI Whisper** via 80-channel log-mel spectrograms and encoder-decoder transformer attention.
+3. **Contextual Sentiment Scoring:** Evaluates customer emotion and distress using **Hugging Face DistilBERT** with calibrated probability scores (0–100%) and heuristic fallback arbitration.
+4. **Regulatory Complaint Classification:** Categorizes interactions into 6 statutory banking domains (**Fraud Complaints**, **Transaction Issues**, **Card Issues**, **Loan Issues**, **Account Issues**, **General Enquiries**) with automatic priority escalation for fraud/AML risk.
+5. **Acoustic Voice Biometrics (Demonstration):** Extracts 64-bin spectral centroid vectors and computes cosine similarity against enrolled customer voiceprints to prototype speaker verification.
+6. **Executive Analytics & Persistent Audit:** Visualizes real-time KPIs and Plotly charts (sentiment donut, complaint distribution, stacked domain cross-tabulation) with permanent local CSV logging (`data/interactions.csv`).
 
 ---
 
-## 4. Banking Complaint Taxonomy
+## 🛠️ Technology Stack
 
-The application classifies transcripts into 6 regulated banking domains:
-
-| Category | Typical Keywords | Urgency Level | Description |
-| :--- | :--- | :--- | :--- |
-| **Fraud Complaints** | *unauthorized, scam, phishing, cloned, stolen, hacked, compromised* | 🚨 **Critical** | Potential unauthorized account takeover or fraudulent charges. |
-| **Transaction Issues** | *wire transfer, deposit, duplicate charge, failed payment, ATM dispensed* | 🟠 **High** | Payment discrepancies, duplicate debits, and pending SWIFT/ACH wires. |
-| **Card Issues** | *debit card, credit card, chip declined, blocked, replacement card, PIN* | 🟠 **High** | Card terminal failures, chip malfunctions, and replacement requests. |
-| **Loan Issues** | *mortgage, interest rate, EMI, repayment, refinance, auto loan* | 🔵 **Medium** | Inquiries regarding loan amortisation, rate adjustments, or payment queries. |
-| **Account Issues** | *locked out, login portal, statement, overdraft, KYC update, profile* | 🔵 **Medium** | Account administration, credentials locked, and profile updates. |
-| **General Enquiries** | *branch hours, representative, notary, appointment, timing, compliment* | ⚪ **Low** | Routine branch hours, notary queries, and positive service feedback. |
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Interface & Visuals** | Streamlit + Plotly | Institutional dark navy dashboard with interactive charts |
+| **Speech-to-Text** | OpenAI Whisper (`base`/`tiny`) | On-premise neural speech transcription |
+| **Sentiment Analysis** | Hugging Face Transformers (`DistilBERT`) | Contextual emotional polarity and confidence scoring |
+| **Data Processing** | Pandas + NumPy | Tabular transformation, aggregation, and metrics |
+| **Storage & Persistence**| Local CSV Ledger | Stateful audit history and sample/live record tracking |
+| **Audio Processing** | Python `wave` + `scipy` | Resilient native PCM decoding and spectral feature extraction |
 
 ---
 
-## 5. Voice Authentication Prototype Clarification
-
-In compliance with banking security standards:
-
-> **Important Disclaimer:**  
-> The Voice Biometrics module provides a **demonstration** of speaker verification using acoustic spectral centroid and frequency feature vectors.  
-> * Neither speech recognition nor customer sentiment analysis authenticates a customer's identity.
-> * Biometric voiceprint similarity is displayed as an educational prototype and architectural proof-of-concept.
-> * It is **not** certified cryptographic banking authentication (such as FIDO2 / WebAuthn).
-
----
-
-## 6. Installation & Execution Guide (Windows & Cross-Platform)
-
-### Step 1: Clone or Navigate to the Project
+## 🚀 Quickstart & Execution
 
 ```powershell
-cd c:\Users\raman\OneDrive\Desktop\hcl-project\bankvoice-ai
-```
+# 1. Clone repository
+git clone https://github.com/2PieRadian/Voice-Authentication.git
+cd Voice-Authentication
 
-### Step 2: Install Dependencies
-
-```powershell
+# 2. Install dependencies
 pip install -r requirements.txt
-```
 
-### Step 3: Run the Streamlit Application
-
-```powershell
+# 3. Launch application
 streamlit run app.py
 ```
-
-The application will start locally and open in your default browser at `http://localhost:8501`.
-
-### Windows FFmpeg Notice (Optional)
-
-* **WAV files work out-of-the-box:** The application includes a custom WAV PCM decoder that streams uncompressed audio directly into OpenAI Whisper **without requiring FFmpeg**.
-* **For MP3/M4A files:** Whisper relies on FFmpeg for compressed audio decoding. If you wish to upload MP3 files on Windows, install FFmpeg via PowerShell:
-  ```powershell
-  winget install Gyan.FFmpeg
-  ```
-  *(Restart your terminal after installation so FFmpeg is picked up in your system `PATH`.)*
+Open **`http://localhost:8501`** in your browser.
 
 ---
 
-## 7. Sample Data & Demonstration Workflow
+## 📂 Project Directory Structure
 
-1. **Immediate Telemetry:** Upon launch, the dashboard loads **15 pre-loaded realistic fictional banking interactions** spanning all 6 categories, allowing you to explore the KPI metrics, donut chart, and bar charts immediately.
-2. **Instant Audio Testing:** Go to **🎙️ Voice Analysis** in the sidebar. You can test immediately using the built-in preset audio clips (e.g., *Critical Fraud Alert*, *Mortgage Inquiry*, or *Card Appreciation*) or upload your own audio file.
-3. **Click "⚡ Analyse Voice Recording":** Whisper transcribes the speech, DistilBERT scores customer sentiment, the classifier categorizes the complaint, and the speaker verification module calculates acoustic similarity.
-4. **Commit to Database:** Click **"💾 Commit to Interaction Database"** to permanently append the interaction to `data/interactions.csv`. All dashboard statistics and charts update instantly.
-5. **Audit History:** Navigate to **📜 Interaction History** to filter, search transcripts, and download the full dataset as a CSV.
+```text
+Voice-Authentication/
+│
+├── app.py                      # Main Streamlit analytics application
+├── requirements.txt            # Python dependencies
+├── README.md                   # Operational guide & synopsis
+├── BankVoice_AI_Technical_Architecture_Document.docx  # Comprehensive whitepaper (.docx)
+│
+├── data/
+│   └── interactions.csv        # Persistent CSV database (15 pre-seeded sample records)
+│
+├── samples/                    # Pre-recorded realistic banking audio WAV files
+│   ├── sample_fraud_alert.wav          # Marcus Vance (Unauthorized charge dispute)
+│   ├── sample_loan_inquiry.wav         # Sarah Jenkins (Mortgage refinancing query)
+│   └── sample_card_appreciation.wav    # Arthur Pendelton (Card unblock praise)
+│
+└── utils/
+    ├── transcription.py        # Whisper STT pipeline with native WAV PCM decoder
+    ├── sentiment.py            # Hugging Face DistilBERT sentiment engine
+    ├── classification.py       # 6-category keyword rule engine with urgency scoring
+    ├── analytics.py            # Plotly chart generators and KPI metrics
+    └── voice_auth.py           # Acoustic voiceprint cosine similarity demo
+```
 
+---
+
+## ⚖️ Regulatory & Biometric Disclaimer
+The speaker verification module calculates acoustic spectral cosine similarity for architectural demonstration. Speech recognition and sentiment analysis do not authenticate identity. In enterprise production, voice biometrics must be paired with anti-spoofing liveness detection and FIDO2 multi-factor tokens.
