@@ -430,3 +430,4 @@ def create_whitepaper(filename="BankVoice_AI_Technical_Architecture_Document.doc
 if __name__ == "__main__":
     out = create_whitepaper()
     print(f"Generated: {out}")
+
