@@ -232,3 +232,4 @@ if __name__ == "__main__":
     print(f"Created {fn1}")
     fn2 = create_project_synopsis_docx("bankvoice-ai/Project_Synopsis.docx")
     print(f"Created {fn2}")
+
