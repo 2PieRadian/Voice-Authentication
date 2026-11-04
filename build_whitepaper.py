@@ -70,15 +70,43 @@ def create_whitepaper(filename="BankVoice_AI_Technical_Architecture_Document.doc
     def add_meta_block():
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        style_paragraph(p, space_after=28, space_before=0)
+        style_paragraph(p, space_after=10, space_before=0)
         run = p.add_run("Executive Technical Whitepaper & Architectural Specification\nVersion 1.0  |  Enterprise Banking Analytics & Voice Intelligence")
         run.font.name = "Calibri"
         run.font.size = Pt(9.5)
         run.font.color.rgb = MUTED
+
+        # GitHub Repository Banner Callout
+        table_gh = doc.add_table(rows=1, cols=1)
+        table_gh.alignment = WD_TABLE_ALIGNMENT.CENTER
+        cell_gh = table_gh.cell(0, 0)
+        cell_gh.width = Inches(6.5)
+        tcPr = cell_gh._tc.get_or_add_tcPr()
+        tcBorders = parse_xml(r'<w:tcBorders xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+                              r'<w:left w:val="single" w:sz="18" w:space="0" w:color="2563EB"/>'
+                              r'<w:top w:val="none"/><w:right w:val="none"/><w:bottom w:val="none"/>'
+                              r'</w:tcBorders>')
+        tcShd = parse_xml(r'<w:shd xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" w:val="clear" w:color="auto" w:fill="F0F6FF"/>')
+        tcPr.append(tcBorders)
+        tcPr.append(tcShd)
+
+        cp = cell_gh.paragraphs[0]
+        style_paragraph(cp, space_after=3, space_before=3)
+        r_lbl = cp.add_run("🔗 Official GitHub Repository: ")
+        r_lbl.font.name = "Calibri"
+        r_lbl.font.size = Pt(10.5)
+        r_lbl.font.bold = True
+        r_lbl.font.color.rgb = NAVY
+        r_url = cp.add_run("https://github.com/2PieRadian/Voice-Authentication")
+        r_url.font.name = "Calibri"
+        r_url.font.size = Pt(10.5)
+        r_url.font.bold = True
+        r_url.font.underline = True
+        r_url.font.color.rgb = BLUE
         
         # Horizontal Rule
         p_hr = doc.add_paragraph()
-        style_paragraph(p_hr, space_after=20, space_before=0)
+        style_paragraph(p_hr, space_after=18, space_before=10)
         p_hr_border = parse_xml(r'<w:pBdr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:bottom w:val="single" w:sz="12" w:space="1" w:color="2563EB"/></w:pBdr>')
         p_hr._p.get_or_add_pPr().append(p_hr_border)
 
